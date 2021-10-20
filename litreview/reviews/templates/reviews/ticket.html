@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'reviews/style_reviews.css' %}">
+{% endblock %}
+{% block content %}
+    <h2>Créer un ticket</h2>
+         <div class="creation_block">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p class="titre">Titre</p>
+                <p class="ticket">{{ ticket_form.title }}</p>
+                <p class="titre">Description</p>
+                <p class="ticket">{{ ticket_form.description }}</p>
+                <p class="titre">Image</p>
+                <p class="ticket">{{ ticket_form.image }}</p>
+                <button type="submit" class="submit_button ticket_button">Envoyer</button>
+                <p>{{ message }}</p>
+            </form>
+        </div>
+{% endblock content %}

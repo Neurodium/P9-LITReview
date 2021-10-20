@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'authentication/style_auth.css' %}">
+{% endblock %}
+{% block content %}
+        <div class="login">
+            <div class="subscribe connect">
+                <p>Inscrivez-vous maintenant</p>
+                    <a href="{% url 'register' %}" class="button">S'inscrire</a>
+
+            </div>
+            <div class="user_login connect">
+                <p>Connectez-vous</p>
+                 <form method="post">
+                    <p>{{ message }}</p>
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit" class="submit_button connect_button">Se connecter</button>
+                 </form>
+            </div>
+        </div>
+{% endblock content %}

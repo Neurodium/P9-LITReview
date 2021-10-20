@@ -1,0 +1,23 @@
+{% load static %}
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>LITReview</title>
+        <link rel="stylesheet" href="{% static 'style_base.css' %}">
+        {% block extrahead %}{% endblock %}
+    </head>
+    <body>
+        <h1>LITReview</h1>
+        {% if user.is_authenticated %}
+            <ul class="nav">
+              <li class="nav"><a href="{% url 'logout' %}">Se déconnecter</a></li>
+              <li class="nav"><a href="{% url 'password-change' %}">{{ request.user }}</a></li>
+              <li class="nav"><a href="{% url 'abonnements' %}">Abonnements</a></li>
+              <li class="nav"><a href="{% url 'posts' %}">Posts</a></li>
+              <li class="nav"><a href="{% url 'home' %}">Flux</a></li>
+            </ul>
+        {% endif %}
+        {% block content %}{% endblock content %}
+    </body>
+</html>

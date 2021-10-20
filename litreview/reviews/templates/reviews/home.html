@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'reviews/style_reviews.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="buttons">
+        <a href="{% url 'ticket' %}" class="button ticket">Demander une critique</a><a href="{% url 'review' %}" class="button review">Créer une critique</a>
+    </div>
+        <p>{{ message }}</p>
+        {% for ticket in tickets %}
+    <div class="tickets">
+        {% if ticket.user == request.user %}
+        <p>Vous avez demandé une critique</p>
+        {% else %}
+        <p>{{ ticket.user.username }} a demandé une critique</p>
+        {% endif %}
+        <p>{{ ticket.title }}</p>
+        <p>{{ ticket.description }}</p>
+        {% if ticket.image != '' %}
+        <div class="img_ticket">
+            <img src="../images/{{ ticket.image }}" class="img"</img>
+        </div>
+        {% endif %}
+    </div>
+        {% endfor %}
+
+
+{% endblock content %}
