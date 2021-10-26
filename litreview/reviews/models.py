@@ -1,6 +1,7 @@
 from django.db import models
 from authentication.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from PIL import Image
 
 # Create your models here.
 class Ticket(models.Model):
@@ -9,10 +10,19 @@ class Ticket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
+    IMAGE_MAX_SIZE = (400, 400)
 
     def __str__(self):
         return str(self.title)
 
+    def resize_image(self):
+        image = Image.open(self.image)
+        image.thumbnail(self.IMAGE_MAX_SIZE)
+        image.save(self.image.path)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.resize_image()
 
 
 class Review(models.Model):
@@ -25,6 +35,9 @@ class Review(models.Model):
 
     def __str__(self):
         return str(self.headline)
+
+    def class_name(self):
+        return self.__class__.__name__
 
 
 class UserFollows(models.Model):

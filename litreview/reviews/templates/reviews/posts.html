@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_tags %}
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'reviews/style_reviews.css' %}">
 {% endblock %}
@@ -8,19 +9,44 @@
         </div>
         <p>{{ message }}</p>
         {% for ticket in tickets %}
-    <div class="tickets">
-        {% if ticket.user == request.user %}
-        <p>Vous avez demandé une critique</p>
-        {% else %}
-        <p>{{ ticket.user.username }} a demandé une critique</p>
-        {% endif %}
-        <p>{{ ticket.title }}</p>
-        <p>{{ ticket.description }}</p>
-        {% if ticket.image != '' %}
-        <div class="img_ticket">
-            <img src="../images/{{ ticket.image }}" class="img"</img>
+        <div class="feed tickets">
+            {% if ticket|class_name == 'Ticket' %}
+            <p>Vous avez demandé une critique</p>
+            <p class="time">{{ ticket.time_created }}</p>
+            <p>{{ ticket.title }}</p>
+            <p>{{ ticket.description }}</p>
+            {% if ticket.image != '' %}
+            <div class="img_ticket">
+                <img src="../images/{{ ticket.image }}" class="img"</img>
+            </div>
+            {% endif %}
+            {% else %}
+            <p>Vous avez publié une critique</p>
+            <p class="time">{{ ticket.time_created }}</p>
+                {% if ticket.rating == 0 %}
+                <p>{{ ticket.headline }} - <span class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</span></p>
+                {% elif ticket.rating == 1 %}
+                <p>{{ ticket.headline }} - <span class="stars">&#9733;&#9734;&#9734;&#9734;&#9734;</span></p>
+                {% elif ticket.rating == 2 %}
+                <p>{{ ticket.headline }} - <span class="stars">&#9733;&#9733;&#9734;&#9734;&#9734;</span></p>
+                {% elif ticket.rating == 3 %}
+                <p>{{ ticket.headline }} - <span class="stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span></p>
+                {% elif ticket.rating == 4 %}
+                <p>{{ ticket.headline }} - <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span></p>
+                {% elif ticket.rating == 5 %}
+                <p>{{ ticket.headline }} - <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+                {% endif %}
+            <p>{{ ticket.body }}</p>
+            <div class="feed reviews">
+                <p>{{ ticket.ticket.title }}</p>
+                <p>{{ ticket.ticket.description }}</p>
+                {% if ticket.ticket.image != '' %}
+                <div class="img_ticket">
+                    <img src="../images/{{ ticket.ticket.image }}" class="img"</img>
+                </div>
+                {% endif %}
+                </div>
+            {% endif %}
         </div>
-        {% endif %}
-    </div>
         {% endfor %}
 {% endblock content %}

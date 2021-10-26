@@ -38,7 +38,8 @@ urlpatterns = [
     path('register/', authentication.views.register, name='register'),
     path('posts', reviews.views.posts, name='posts'),
     path('ticket', reviews.views.TicketView.as_view(), name='ticket'),
-    path('review', reviews.views.ReviewView.as_view(), name='review'),
+    path('review/', reviews.views.ReviewView.as_view(), name='review'),
+    path('review/<int:ticket_id>', reviews.views.ReviewTicketView.as_view(), name='review_ticket'),
     path('abonnements/', reviews.views.SubscribeView.as_view(), name='abonnements'),
 ]
 if settings.DEBUG:

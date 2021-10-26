@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
     <h2>Créer une critique</h2>
+        {% if request.path == "/review/" %}
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="creation_block">
@@ -18,15 +19,45 @@
                 </div>
                 <div class="creation_block">
                     <div class="head_block">Critique</div>
-                    <p class="titre">Titre</p>
-                    <p class="ticket">{{ review_form.headline }}</p>
-                    <p class="titre">Note</p>
-                    <p>{{ review_form.rating }}</p><br>
-                    <p class="titre">Commentaire</p>
-                    <p class="ticket">{{ review_form.body }}</p>
-                    <button type="submit" class="submit_button ticket_button">Envoyer</button>
-                </div>
+                        <p class="titre">Titre</p>
+                        <p class="ticket">{{ review_form.headline }}</p>
+                        <p class="titre">Note</p>
+                        <p>{{ review_form.rating }}</p><br>
+                        <p class="titre">Commentaire</p>
+                        <p class="ticket">{{ review_form.body }}</p>
+                        <button type="submit" class="submit_button ticket_button">Envoyer</button>
+                    </div>
                 <p>{{ message }}</p>
+                 </div>
             </form>
-        </div>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="creation_block">
+                    <div class="head_block">Vous êtes en train de poster une réponse à</div>
+                    <div class="feed ticket_reviewed">
+                        <p class="time">{{ ticket.time_created }}</p>
+                        <p>{{ ticket.title }}</p>
+                        <p>{{ ticket.description }}</p>
+                        {% if ticket.image != '' %}
+                        <div class="img_ticket">
+                            <img src="../images/{{ ticket.image }}" class="img"</img>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="creation_block">
+                    <div class="head_block">Critique</div>
+                        <p class="titre">Titre</p>
+                        <p class="ticket">{{ review_form.headline }}</p>
+                        <p class="titre">Note</p>
+                        <p>{{ review_form.rating }}</p><br>
+                        <p class="titre">Commentaire</p>
+                        <p class="ticket">{{ review_form.body }}</p>
+                        <button type="submit" class="submit_button ticket_button">Envoyer</button>
+                    </div>
+                <p>{{ message }}</p>
+                 </div>
+            </form>
+        {% endif %}
 {% endblock content %}
