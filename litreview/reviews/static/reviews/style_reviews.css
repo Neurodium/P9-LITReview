@@ -84,6 +84,10 @@ div.head_block {
     flex-direction: row;
 }
 
+div.button {
+    margin-bottom: 10px;
+    margin-left: 72%;
+}
 
 .submit_button {
     background-color: #e2801d;
@@ -103,6 +107,10 @@ a.button {
     font-size: 22px;
     text-decoration: none;
     color: initial;
+}
+
+a.delete {
+    margin-left: 5px;
 }
 
 

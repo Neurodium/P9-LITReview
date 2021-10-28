@@ -7,7 +7,6 @@
 {% block content %}
     <h2>Vos posts</h2>
         </div>
-        <p>{{ message }}</p>
         {% for ticket in tickets %}
         <div class="feed tickets">
             {% if ticket|class_name == 'Ticket' %}
@@ -20,7 +19,9 @@
                 <img src="../images/{{ ticket.image }}" class="img"</img>
             </div>
             {% endif %}
-            <a href="{% url 'edit_ticket' ticket_id=ticket.id %}" class="button review">Modifier</a><a href="{% url 'delete_ticket' ticket_id=ticket.id %}" class="button review">Supprimer</a>
+            <div class="button">
+                <a href="{% url 'edit_ticket' ticket_id=ticket.id %}" class="button edit">Modifier</a><a href="{% url 'delete_ticket' ticket_id=ticket.id %}" class="button delete">Supprimer</a>
+            </div>
             {% else %}
             <p>Vous avez publié une critique</p>
             <p class="time">{{ ticket.time_created }}</p>
@@ -39,6 +40,11 @@
                 {% endif %}
             <p>{{ ticket.body }}</p>
             <div class="feed reviews">
+                {% if ticket.ticket.user == request.user %}
+                <p>Votre Ticket</p>
+                {% else %}
+                <p>Ticket de {{ ticket.ticket.user }}</p>
+                {% endif %}
                 <p>{{ ticket.ticket.title }}</p>
                 <p>{{ ticket.ticket.description }}</p>
                 {% if ticket.ticket.image != '' %}
@@ -47,7 +53,9 @@
                 </div>
                 {% endif %}
                 </div>
-                <a href="{% url 'edit_review' ticket_id=ticket.ticket.id %}" class="button review">Modifier</a><a href="{% url 'delete_review' ticket_id=ticket.ticket.id %}" class="button review">Supprimer</a>
+                <div class="button">
+                    <a href="{% url 'edit_review' ticket_id=ticket.ticket.id %}" class="button edit">Modifier</a><a href="{% url 'delete_review' ticket_id=ticket.ticket.id %}" class="button delete">Supprimer</a>
+                </div>
             {% endif %}
         </div>
         {% endfor %}

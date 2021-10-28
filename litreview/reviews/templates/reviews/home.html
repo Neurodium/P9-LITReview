@@ -8,7 +8,6 @@
     <div class="buttons">
         <a href="{% url 'ticket' %}" class="button ticket">Demander une critique</a><a href="{% url 'review' %}" class="button review">Créer une critique</a>
     </div>
-        <p>{{ message }}</p>
         {% for ticket, review in tickets.items %}
     <div class="feed tickets">
         {% if ticket|class_name == 'Ticket' %}
@@ -26,7 +25,9 @@
             </div>
             {% endif %}
             {% if review == 'No' %}
+                <div class="button">
                     <a href="{% url 'review_ticket' ticket_id=ticket.id %}" class="button review">Créer une critique</a>
+                </div>
             {% endif %}
         {% else %}
             {% if ticket.user == request.user %}
