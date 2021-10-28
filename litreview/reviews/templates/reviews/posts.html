@@ -19,7 +19,7 @@
                 <img src="../images/{{ ticket.image }}" class="img"</img>
             </div>
             {% endif %}
-            <div class="button">
+            <div class="buttons_bottom">
                 <a href="{% url 'edit_ticket' ticket_id=ticket.id %}" class="button edit">Modifier</a><a href="{% url 'delete_ticket' ticket_id=ticket.id %}" class="button delete">Supprimer</a>
             </div>
             {% else %}
@@ -53,7 +53,7 @@
                 </div>
                 {% endif %}
                 </div>
-                <div class="button">
+                <div class="buttons_bottom">
                     <a href="{% url 'edit_review' ticket_id=ticket.ticket.id %}" class="button edit">Modifier</a><a href="{% url 'delete_review' ticket_id=ticket.ticket.id %}" class="button delete">Supprimer</a>
                 </div>
             {% endif %}

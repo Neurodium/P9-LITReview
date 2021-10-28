@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'reviews/style_reviews.css' %}">
 {% endblock %}
 {% block content %}
-    <div class="buttons">
+    <div class="buttons_top">
         <a href="{% url 'ticket' %}" class="button ticket">Demander une critique</a><a href="{% url 'review' %}" class="button review">Créer une critique</a>
     </div>
         {% for ticket, review in tickets.items %}
@@ -25,7 +25,7 @@
             </div>
             {% endif %}
             {% if review == 'No' %}
-                <div class="button">
+                <div class="buttons_bottom">
                     <a href="{% url 'review_ticket' ticket_id=ticket.id %}" class="button review">Créer une critique</a>
                 </div>
             {% endif %}
