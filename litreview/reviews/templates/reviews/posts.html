@@ -20,6 +20,7 @@
                 <img src="../images/{{ ticket.image }}" class="img"</img>
             </div>
             {% endif %}
+            <a href="{% url 'edit_ticket' ticket_id=ticket.id %}" class="button review">Modifier</a><a href="{% url 'delete_ticket' ticket_id=ticket.id %}" class="button review">Supprimer</a>
             {% else %}
             <p>Vous avez publié une critique</p>
             <p class="time">{{ ticket.time_created }}</p>
@@ -46,6 +47,7 @@
                 </div>
                 {% endif %}
                 </div>
+                <a href="{% url 'edit_review' ticket_id=ticket.ticket.id %}" class="button review">Modifier</a><a href="{% url 'delete_review' ticket_id=ticket.ticket.id %}" class="button review">Supprimer</a>
             {% endif %}
         </div>
         {% endfor %}

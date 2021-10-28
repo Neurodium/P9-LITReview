@@ -141,13 +141,12 @@ div.follower_user_name {
 }
 
 .img_ticket {
-    height: 350px;
-    width: 250px;
+    height: 300px;
 }
 
 .img {
-   width: 100%;
-   height: auto;
+   width: auto;
+   height: 100%;
 }
 
 ul#id_rating {

@@ -34,7 +34,7 @@
             <form method="post">
                 {% csrf_token %}
                 <div class="creation_block">
-                    <div class="head_block">Vous êtes en train de poster une réponse à</div>
+                    <div class="head_block">Vous êtes en train de poster une réponse à {{ ticket.user }} </div>
                     <div class="feed ticket_reviewed">
                         <p class="time">{{ ticket.time_created }}</p>
                         <p>{{ ticket.title }}</p>

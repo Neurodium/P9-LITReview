@@ -1,16 +1,19 @@
 from django import forms
 from .models import Ticket, Review
-from django.utils.safestring import mark_safe
 
 class SubscribeForm(forms.Form):
     username = forms.CharField(max_length=63, label='Nom d’utilisateur')
 
 
 class TicketForm(forms.ModelForm):
+
     class Meta:
         model = Ticket
         fields = ['title', 'description', 'image']
 
+
+class DeleteTicketForm(forms.Form):
+    delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
 REVIEW_RATINGS =(
     ("0", "- 0"),
@@ -23,6 +26,9 @@ REVIEW_RATINGS =(
 
 class ReviewForm(forms.ModelForm):
     rating = forms.ChoiceField(choices=REVIEW_RATINGS, widget=forms.RadioSelect)
+
     class Meta:
         model = Review
         fields = ['headline', 'rating', 'body']
+
+

@@ -22,11 +22,11 @@
             <p>{{ ticket.description }}</p>
             {% if ticket.image != '' %}
             <div class="img_ticket">
-                <img src="../images/{{ ticket.image }}" class="img"</img>
+                <img src="../images/{{ ticket.image }}" class="img"></img>
             </div>
             {% endif %}
             {% if review == 'No' %}
-                    <a href="{% url 'review_ticket' ticket_id=ticket.id %}" class="button review">Demander une critique</a>
+                    <a href="{% url 'review_ticket' ticket_id=ticket.id %}" class="button review">Créer une critique</a>
             {% endif %}
         {% else %}
             {% if ticket.user == request.user %}
@@ -54,7 +54,7 @@
                     <p>{{ ticket.ticket.description }}</p>
                     {% if ticket.ticket.image != '' %}
                     <div class="img_ticket">
-                        <img src="../images/{{ ticket.ticket.image }}" class="img"</img>
+                        <img src="../images/{{ ticket.ticket.image }}" class="img"></img>
                     </div>
                     {% endif %}
                 </div>

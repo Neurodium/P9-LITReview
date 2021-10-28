@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 from .models import UserFollows, Ticket, Review
 from authentication.models import User
@@ -44,10 +44,69 @@ def posts(request):
     all_tickets = sorted(chain(user_tickets, user_reviews),
                          key=lambda instance: instance.time_created,
                          reverse=True)
-    message=''
-    return render(request, 'reviews/posts.html', context={'tickets': all_tickets,
-                                                         'message': message})
+    return render(request, 'reviews/posts.html', context={'tickets': all_tickets})
 
+
+@login_required
+def edit_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    if request.user == ticket.user:
+        edit_form = forms.TicketForm(instance=ticket)
+        message = ''
+        if request.method == 'POST':
+            if 'edit_ticket' in request.POST:
+                edit_form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
+                if edit_form.is_valid():
+                    modified_ticket = edit_form.save(commit=False)
+                    modified_ticket.user = request.user
+                    modified_ticket.save()
+                    return redirect('posts')
+        return render(request, 'reviews/edit_ticket.html', context={'edit_form': edit_form,
+                                                                    'ticket': ticket})
+    else:
+        return redirect('home')
+
+@login_required
+def delete_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    if request.user == ticket.user:
+        ticket.delete()
+        return redirect('posts')
+    else:
+        return redirect('home')
+
+
+@login_required
+def edit_review(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    review = get_object_or_404(Review, ticket=ticket)
+    if request.user == review.user:
+        edit_form = forms.ReviewForm(instance=review)
+        if request.method == 'POST':
+            if 'edit_review' in request.POST:
+                edit_form = forms.ReviewForm(request.POST, instance=review)
+                if edit_form.is_valid():
+                    modified_review = edit_form.save(commit=False)
+                    modified_review.user = request.user
+                    modified_review.ticket = ticket
+                    modified_review.save()
+                    return redirect('posts')
+        return render(request, 'reviews/edit_review.html', context={'edit_form': edit_form,
+                                                                    'ticket': ticket,
+                                                                    'review': review})
+    else:
+        return redirect('home')
+
+
+@login_required
+def delete_review(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    review = get_object_or_404(Review, ticket=ticket)
+    if request.user == review.user:
+        review.delete()
+        return redirect('posts')
+    else:
+        return redirect('home')
 
 
 class TicketView(LoginRequiredMixin, View):
@@ -93,10 +152,7 @@ class ReviewView(LoginRequiredMixin, View):
                 review.user = request.user
                 ticket.save()
                 review.save()
-                message = 'Votre ticket et critique ont été créés'
-                return render(request, self.template_name, context={'ticket_form': ticket_form,
-                                                                    'review_form': review_form,
-                                                                    'message': message})
+                return redirect('home')
 
 
 class ReviewTicketView(LoginRequiredMixin, View):
@@ -121,13 +177,7 @@ class ReviewTicketView(LoginRequiredMixin, View):
                 review.ticket = ticket
                 review.user = request.user
                 review.save()
-                message = "Votre critique a été créée"
-
-        else:
-            message = "Une critique a déjà été écrite pour ce livre"
-        return render(request, self.template_name, context={'review_form': review_form,
-                                                            'message': message})
-
+                return redirect('home')
 
 
 class SubscribeView(LoginRequiredMixin, View):

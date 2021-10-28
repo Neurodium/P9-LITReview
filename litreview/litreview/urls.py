@@ -41,6 +41,10 @@ urlpatterns = [
     path('review/', reviews.views.ReviewView.as_view(), name='review'),
     path('review/<int:ticket_id>', reviews.views.ReviewTicketView.as_view(), name='review_ticket'),
     path('abonnements/', reviews.views.SubscribeView.as_view(), name='abonnements'),
+    path('edit_ticket/<int:ticket_id>', reviews.views.edit_ticket, name='edit_ticket'),
+    path('delete_ticket/<int:ticket_id>', reviews.views.delete_ticket, name='delete_ticket'),
+    path('edit_review/<int:ticket_id>', reviews.views.edit_review, name='edit_review'),
+    path('delete_review/<int:ticket_id>', reviews.views.delete_review, name='delete_review'),
 ]
 if settings.DEBUG:
     urlpatterns += static(

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'reviews/style_reviews.css' %}">
+{% endblock %}
+{% block content %}
+    <h2>Modifier votre critique</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="creation_block">
+                    <div class="head_block">Vous êtes en train de modifier votre réponse à {{ ticket.user }}</div>
+                    <div class="feed ticket_reviewed">
+                        <p class="time">{{ ticket.time_created }}</p>
+                        <p>{{ ticket.title }}</p>
+                        <p>{{ ticket.description }}</p>
+                        {% if ticket.image != '' %}
+                        <div class="img_ticket">
+                            <img src="../images/{{ ticket.image }}" class="img"></img>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="creation_block">
+                    <div class="head_block">Critique</div>
+                        <p class="titre">Titre</p>
+                        <p class="ticket">{{ edit_form.headline }}</p>
+                        <p class="titre">Note</p>
+                        <p>{{ edit_form.rating }}</p><br>
+                        <p class="titre">Commentaire</p>
+                        <p class="ticket">{{ edit_form.body }}</p>
+                        <input name="edit_review" type="hidden">
+                        <button type="submit" class="submit_button ticket_button">Envoyer</button>
+                    </div>
+                <p>{{ message }}</p>
+                 </div>
+            </form>
+{% endblock content %}
