@@ -18,7 +18,7 @@ manage.py migrate
 
 # Features
 [Register] http://127.0.0.1:8000/register/<br>
-  Create your account
+&nbsp;&nbsp;Create your account
   
 [Login] http://127.0.0.1:8000/
   Log into your account with your credentials 
