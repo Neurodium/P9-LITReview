@@ -2,6 +2,7 @@ from django.db import models
 from authentication.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+
 # Create your models here.
 class Ticket(models.Model):
     title = models.CharField(max_length=128)
@@ -39,7 +40,3 @@ class UserFollows(models.Model):
 
     class Meta:
         unique_together = ('user', 'followed_user',)
-
-
-
-

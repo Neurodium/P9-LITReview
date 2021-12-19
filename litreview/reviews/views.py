@@ -9,6 +9,7 @@ from itertools import chain
 from . import forms
 
 
+# get the user's feed according to his subscriptions
 @login_required
 def home(request):
     # find users that are followed by current user
@@ -29,8 +30,8 @@ def home(request):
     reviews = followed_reviews.union(user_reviews).union(user_ticket_reviews)
     # sort reviews and tickets by date
     all_tickets = sorted(chain(tickets, reviews),
-                  key=lambda instance: instance.time_created,
-                  reverse=True)
+                         key=lambda instance: instance.time_created,
+                         reverse=True)
     tickets_dict = {}
     # find for each ticket if a review has been written
     for ticket in all_tickets:
@@ -142,7 +143,6 @@ class TicketView(LoginRequiredMixin, View):
         ticket_form = self.ticket_form()
         return render(request, self.template_name, context={'ticket_form': ticket_form})
 
-
     def post(self, request):
         ticket_form = self.ticket_form(request.POST, request.FILES)
         if ticket_form.is_valid():
@@ -213,7 +213,6 @@ class SubscribeView(LoginRequiredMixin, View):
     subscribe_form = forms.SubscribeForm
     template_name = 'reviews/abonnements.html'
 
-
     def get(self, request):
         subscribe_form = self.subscribe_form()
         # find users that are being followed by logged user
@@ -254,7 +253,7 @@ class SubscribeView(LoginRequiredMixin, View):
                                     already_followed = True
                                     break
                             # if user is not followed then current with user will follow it
-                            if already_followed == False:
+                            if not already_followed:
                                 following = UserFollows(user=request.user,
                                                         followed_user=obj_user_to_follow)
                                 following.save()
@@ -278,7 +277,7 @@ class SubscribeView(LoginRequiredMixin, View):
             for followed_user in followed_users:
                 if followed_user.followed_user.username == user_to_unfollow:
                     unfollowed_user = UserFollows.objects.get(user=request.user,
-                                                               followed_user=followed_user.followed_user)
+                                                              followed_user=followed_user.followed_user)
                     unfollowed_user.delete()
                     message = f"Vous ne suivez plus {followed_user.followed_user.username}"
                     break
@@ -289,7 +288,3 @@ class SubscribeView(LoginRequiredMixin, View):
                                                                 'followed_users': followed_users,
                                                                 'followers': followers,
                                                                 'message': message})
-
-
-
-

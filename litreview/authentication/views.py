@@ -9,10 +9,13 @@ from authentication.models import User
 from . import forms
 
 
+# class to manage user authentication
 class LoginPage(View):
     login_form = forms.LoginForm
     template_name = 'authentication/login.html'
 
+    # if user is already authenticated, it gets him to is account homepage otherwise it asks visitor to register
+    # or connect
     def get(self, request):
         if request.user.is_authenticated:
             return redirect('home')
@@ -22,6 +25,7 @@ class LoginPage(View):
             return render(
                 request, self.template_name, context={'form': form, 'message': message})
 
+    # user posts his credentials if he is registered and connects himself to his account
     def post(self, request):
         form = self.login_form(request.POST)
         if form.is_valid():
@@ -35,15 +39,14 @@ class LoginPage(View):
         message = 'Identifiants invalides.'
         return render(request, self.template_name, context={'form': form, 'message': message})
 
+
+# create a view to let the visitor register a new account
 @csrf_protect
 def register(request):
     if request.method == 'POST':
         form = forms.RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            user = User.objects.get(username=form.cleaned_data['username'])
-            follow_self = UserFollows(user=user, followed_user=user)
-            follow_self.save()
             messages.success(request, 'Account created successfully')
             return redirect('register')
     else:
@@ -52,6 +55,7 @@ def register(request):
     return render(request, 'authentication/register.html', {'form': form})
 
 
+# disconnect the user from the website
 def logout_user(request):
     logout(request)
     return redirect('login')
