@@ -17,7 +17,7 @@ pip install -r src/requirements.txt
 manage.py migrate
 
 # Features
-[Register] http://127.0.0.1:8000/register/
+[Register] http://127.0.0.1:8000/register/<br>
   Create your account
   
 [Login] http://127.0.0.1:8000/
