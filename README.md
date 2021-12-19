@@ -1,24 +1,40 @@
 # P9-LITReview
  WebSite for reviewing books
 
-# Setup vitrual environment
-python3.5 -m venv env/
+# Setup virtual environment
+python3.5 -m venv venv/
 
+# Activate virtual environment
+source venv/bin/activate
 
-# Activation de cet environnement
-source env/bin/activate
+# Clone project
+git clone https://github.com/Neurodium/P9-LITReview.git
 
-# Clonage du projet - récupération des sources
-# Actuellement, la branche par défaut du projet est develop
-# Ce sera celle qui sera active par défaut immédiatement après le clonage
-git clone https://github.com/neogeo-technologies/geocontrib.git src/
-
-# Installer les dépendances
+# Install dependencies
 pip install -r src/requirements.txt
 
-# Création d'un projet Django
-django-admin startproject config .
+# Initialize database
+manage.py migrate
 
-# Création de liens symboliques pour que les sources soient visibles par Django
-ln -s src/geocontrib/ .
-ln -s src/api/ .
+# Features
+[Register] http://127.0.0.1:8000/register/
+  Create your account
+  
+[Login] http://127.0.0.1:8000/
+  Log into your account with your credentials 
+  
+[Flux] http://127.0.0.1:8000/home/
+  Your tickets and reviews and also the ones of the users you follow 
+  Create a review or create a ticket to ask for a review
+  
+[Posts] http://127.0.0.1:8000/posts
+  The tickets or reviews you have created 
+  
+[Abonnements] http://127.0.0.1:8000/abonnements/
+  Manage the users you want to follow
+
+[YourUsername] http://127.0.0.1:8000/password-change/
+  Change your password
+  
+[Se déconnecter] http://127.0.0.1:8000/logout/
+  Disconnect from website
