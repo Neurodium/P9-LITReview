@@ -1,5 +1,5 @@
 # P9-LITReview
- WebSite for reviewing books using Django
+ WebSite for reviewing books with Django
 
 # Setup virtual environment
 python3.5 -m venv venv/
