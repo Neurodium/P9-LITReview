@@ -16,6 +16,12 @@ pip install -r src/requirements.txt
 # Initialize database
 manage.py migrate
 
+# Launch Server
+manage.py runserver
+
+# Django application access
+Go to: http://127.0.0.1:8000/
+
 # Features
 [Register] http://127.0.0.1:8000/register/<br>
 &nbsp;&nbsp;Create your account
