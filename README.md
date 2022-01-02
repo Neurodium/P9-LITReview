@@ -11,13 +11,13 @@ source venv/bin/activate
 git clone https://github.com/Neurodium/P9-LITReview.git
 
 # Install dependencies
-pip install -r src/requirements.txt
+run pip install -r src/requirements.txt
 
 # Initialize database
-manage.py migrate
+ run manage.py migrate
 
 # Launch Server
-manage.py runserver
+run manage.py runserver
 
 # Django application access
 Go to: http://127.0.0.1:8000/
